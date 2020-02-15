@@ -1,11 +1,11 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Net.Http;
+using BusinessTravelJob.Infrastructure;
+using StackExchange.Redis;
 
 namespace BusinessTravelJob
 {
@@ -21,13 +21,14 @@ namespace BusinessTravelJob
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddScoped<HttpClient>();
+            services.AddScoped<MouzenidisHttpClient>();
+            services.AddScoped<HttpQueryKeyGenerator>();
 
-            //services.AddStackExchangeRedisCache(options =>
-            //{
-            //    options.Configuration = "localhost";
-            //    options.InstanceName = "SampleInstance";
-            //});
+            //set your settings for redis cache
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost:6379,resolveDns=true";
+            });
 
             services.AddControllersWithViews();
 
