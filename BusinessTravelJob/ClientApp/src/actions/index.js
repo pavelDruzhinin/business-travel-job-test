@@ -1,7 +1,13 @@
 import api from "../api";
 
 const SET_FILTER = "SET_FILTER";
-function setFilter() {
+const setFilter = (links, dictionaries) => ({
+    type: SET_FILTER,
+    links,
+    dictionaries
+});
+
+function setFilterThunk() {
     return function (dispatch) {
         return api.getFilter()
             .then((response) => {
@@ -10,50 +16,56 @@ function setFilter() {
                 const links = data.links;
                 const dictionaries = data.dictionaries;
 
-                return dispatch({ type: SET_FILTER, links, dictionaries })
+                return dispatch(setFilter(links, dictionaries));
             });
     }
 }
 
 const SET_FILTER_CITY = "SET_FILTER_CITY";
-function setFilterCity(city) {
-    return { type: SET_FILTER_CITY, city: city };
-}
+const setFilterCity = (city) => ({
+    type: SET_FILTER_CITY,
+    city: city
+});
 
 const SET_FILTER_COUNTRY = "SET_FILTER_COUNTRY";
-function setFilterCountry(country) {
-    return { type: SET_FILTER_COUNTRY, country: country };
-}
+const setFilterCountry = (country) => ({
+    type: SET_FILTER_COUNTRY,
+    country: country
+});
 
 const SET_FILTER_DATE_FROM = "SET_FILTER_DATE_FROM";
-function setFilterDateFrom(dateFrom) {
-    return { type: SET_FILTER_DATE_FROM, dateFrom: dateFrom };
-}
+const setFilterDateFrom = (dateFrom) => ({
+    type: SET_FILTER_DATE_FROM,
+    dateFrom: dateFrom
+});
 
 const SET_FILTER_DATE_TO = "SET_FILTER_DATE_TO";
-function setFilterDateTo(dateTo) {
-    return { type: SET_FILTER_DATE_TO, dateTo: dateTo };
-}
+const setFilterDateTo = (dateTo) => ({
+    type: SET_FILTER_DATE_TO,
+    dateTo: dateTo
+});
 
 const TOURS_LOADED = "TOURS_LOADED";
-function searchTours(filter) {
+const toursLoaded = (tours) => ({ type: TOURS_LOADED, tours: tours });
 
+const TOURS_LOADING = "TOURS_LOADING";
+const toursLoading = () => ({ type: TOURS_LOADING });
+
+const TOURS_LOAD_ERROR = "TOURS_LOAD_ERROR";
+const toursLoadError = () => ({ type: TOURS_LOAD_ERROR });
+
+function searchToursThunk(filter) {
     return function (dispatch) {
-        dispatch({ type: TOURS_LOADING });
+        dispatch(toursLoading());
 
         return api.searchTours(filter)
-            .then((response) => {
-                return dispatch({ type: TOURS_LOADED, tours: response.data.data.items });
-            });
+            .then((response) => dispatch(toursLoaded(response.data.data.items)))
+            .catch((error) => dispatch(toursLoadError(error)));
     };
 }
 
-const TOURS_LOADING = "TOURS_LOADING";
-function toggleLoading(isLoading) {
-    return { type: TOURS_LOADING, isLoading: isLoading };
-}
-
 export default {
+    //filter
     SET_FILTER,
     setFilter,
 
@@ -69,9 +81,17 @@ export default {
     SET_FILTER_DATE_TO,
     setFilterDateTo,
 
+    //tours
     TOURS_LOADED,
-    searchTours,
+    toursLoaded,
 
     TOURS_LOADING,
-    toggleLoading
+    toursLoading,
+
+    TOURS_LOAD_ERROR,
+    toursLoadError,
+
+    //thunks
+    setFilterThunk,
+    searchToursThunk
 }

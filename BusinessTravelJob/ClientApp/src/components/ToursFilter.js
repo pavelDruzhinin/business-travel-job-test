@@ -17,11 +17,13 @@ class ToursFilterComponent extends React.Component {
         dateFrom: PropTypes.object.isRequired,
         dateTo: PropTypes.object.isRequired,
 
-        onFilter: PropTypes.func
+        onToursFilter: PropTypes.func
     }
 
     componentDidMount() {
-        this.props.setFilter();
+        this.props
+            .setFilter()
+            .then(() => this.props.onToursFilter(this.filter));
     }
 
     render() {
@@ -68,13 +70,13 @@ class ToursFilterComponent extends React.Component {
                     </div>
                 </div>
                 <div className="d-flex flex-column justify-content-end">
-                    <button type="button" className="btn btn-primary" onClick={() => this.props.onFilter(this._getFilter())}>Поиск</button>
+                    <button type="button" className="btn btn-primary" onClick={() => this.props.onToursFilter(this.filter)}>Поиск</button>
                 </div>
             </div>
         );
     }
 
-    _getFilter() {
+    get filter() {
         const { departureCity, country, dateFrom, dateTo } = this.props;
         return {
             departureCities: [departureCity.value],

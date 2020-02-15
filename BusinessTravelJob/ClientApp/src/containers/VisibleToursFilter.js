@@ -17,7 +17,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         setFilter: () => {
-            dispatch(Actions.setFilter());
+            return dispatch(Actions.setFilterThunk());
         },
         setFilterCity: (city) => {
             dispatch(Actions.setFilterCity(city));
@@ -31,8 +31,8 @@ const mapDispatchToProps = (dispatch, ownProps) => {
         setFilterDateTo: (dateTo) => {
             dispatch(Actions.setFilterDateTo(dateTo));
         },
-        onFilter: (filter) => {
-            dispatch(Actions.searchTours(filter))
+        onToursFilter: (filter) => {
+            dispatch(Actions.searchToursThunk(filter))
         }
     }
 }

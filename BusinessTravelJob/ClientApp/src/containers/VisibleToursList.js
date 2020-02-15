@@ -10,11 +10,7 @@ const mapStateToProps = (state, ownProps) => {
     };
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-        onClick: () => {
-            dispatch(Actions.searchTours(ownProps.tours))
-        }
-    }
+    return {};
 }
 
 const VisibleToursList = connect(
