@@ -1,9 +1,13 @@
 # business-travel-job-test
 
-Для запуска проекта необходим Redis. Его можно развернуть локально или в виде docker-контейнера:
+Test job where I implemented an asp.net core app with React for searching routes of airplanes.
+
+I am using React, ASP.NET Core, Redis, Docker.
+
+If you want to run the project then you need to install Redis. You can do it locally or like Docker container:
 
 `docker run --name redis -p 6379:6379 -d redis redis-server --appendonly yes`
 
-После этого приложение можно запустить средствами Visual Studio или командой в терминале:
+After that you can run app by Visual Studio or by terminal:
 
 `dotnet run --project BusinessTravelJob`
