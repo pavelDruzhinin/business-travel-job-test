@@ -1,6 +1,6 @@
 # business-travel-job-test
 
-Test job where I implemented an ASP.NET core app with React for searching routes of airplanes.
+Test job that I implemented an ASP.NET core app with React for searching routes of airplanes.
 
 I am using React, ASP.NET Core, Redis, Docker.
 
